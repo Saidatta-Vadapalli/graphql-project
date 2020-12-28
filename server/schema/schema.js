@@ -7,9 +7,9 @@ const { GraphQLObjectType, GraphQLString, GraphQLSchema } = graphql;
 
 //dummy data, will be adding the database later on ...
 var book = [
-  { name: "Name of the Wind", genre: "Fantasy", id: 1 },
-  { name: "The Final Empire", genre: "Fantasy", id: 2 },
-  { name: "The long Earth", genre: "Sci-Fi", id: 3 },
+  { name: "Name of the Wind", genre: "Fantasy", id: "1" },
+  { name: "The Final Empire", genre: "Fantasy", id: "2" },
+  { name: "The long Earth", genre: "Sci-Fi", id: "3" },
 ];
 
 const BookType = new GraphQLObjectType({
@@ -35,7 +35,7 @@ const RootQuery = new GraphQLObjectType({
         // when the query is recieved, the resolve function is fired hence defining the resolved function.
         // the id parameter passed to the graphql api would be accessible with the property as args.id
         // code to get data from the database or other source
-        _.find(books, { id: args.id }); // lodash function which runs through the array and return the book and the details associated
+        _.find(book, { id: args.id }); // lodash function which runs through the array and return the book and the details associated
       },
     },
   },
