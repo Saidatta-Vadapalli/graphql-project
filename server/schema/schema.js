@@ -1,6 +1,6 @@
-import graphql from "graphql";
+const graphql = require("graphql");
 const _ = require("lodash");
-const { GraphQLObjectType, GraphQLString } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLSchema } = graphql;
 
 //Created a graphQL object tyupe schema, the id, name and genre require a special graphql data tyupe to tell graphql that
 // the values would be of the type string, this is the first step into building the schema.
