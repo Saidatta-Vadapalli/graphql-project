@@ -2,9 +2,6 @@ const graphql = require("graphql");
 const _ = require("lodash");
 const { GraphQLObjectType, GraphQLString, GraphQLSchema } = graphql;
 
-//Created a graphQL object tyupe schema, the id, name and genre require a special graphql data tyupe to tell graphql that
-// the values would be of the type string, this is the first step into building the schema.
-
 //dummy data, will be adding the database later on ...
 var books = [
   { name: "Name of the Wind", genre: "Fantasy", id: "1" },
@@ -12,6 +9,8 @@ var books = [
   { name: "The long Earth", genre: "Sci-Fi", id: "3" },
 ];
 
+//Created a graphQL object tyupe schema, the id, name and genre require a special graphql data tyupe to tell graphql that
+// the values would be of the type string, this is the first step into building the schema.
 const BookType = new GraphQLObjectType({
   name: "Book",
   fields: () => ({
@@ -35,7 +34,7 @@ const RootQuery = new GraphQLObjectType({
         // when the query is recieved, the resolve function is fired hence defining the resolved function.
         // the id parameter passed to the graphql api would be accessible with the property as args.id
         // code to get data from the database or other source
-        return _.find(books, { id: args.id }); // lodash function which runs through the array and return the book and the details associated
+        return _.find(books, { id: args.id }); // returning the lodash function which runs through the array and return the book and the details associated
       },
     },
   },
