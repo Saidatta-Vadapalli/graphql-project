@@ -9,13 +9,13 @@ const {
 } = graphql;
 
 //dummy data, will be adding the database later on ...
-var books = [
-  { name: "Name of the Wind", genre: "Fantasy", id: "1" },
-  { name: "The Final Empire", genre: "Fantasy", id: "2" },
-  { name: "The long Earth", genre: "Sci-Fi", id: "3" },
+let books = [
+  { name: "Name of the Wind", genre: "Fantasy", id: "1", authorID: "1" },
+  { name: "The Final Empire", genre: "Fantasy", id: "2", authorID: "3" },
+  { name: "The long Earth", genre: "Sci-Fi", id: "3", authorID: "2" },
 ];
 
-var author = [
+let author = [
   { name: "Peter Pan", age: 43, id: "1" },
   { name: "Ron Weasly", age: 24, id: "2" },
   { name: "Hermione Granger", age: 19, id: "3" },
@@ -41,6 +41,15 @@ const BookType = new GraphQLObjectType({
     id: { type: GraphQLID }, // id is a type of string
     name: { type: GraphQLString }, // name is a type of string
     genre: { type: GraphQLString }, // genre is a type of string
+    author: {
+      //not passing any arguments for this  type
+      // with this particular type, we're asking for the author details along with the book
+      type: AuthorType, //
+      resolve(parent, args) { //resolver function
+        console.log(parent);
+        return _.find(author, { id: parent.authorID }); //lodash function responsible for returning the author of the book requested
+      },
+    },
   }),
 });
 
@@ -62,6 +71,7 @@ const RootQuery = new GraphQLObjectType({
       },
     },
     author: {
+      // same as the booktype, adding the custom graphql datatype, args and the resolver function, this type is used only when we're requesting the author
       type: AuthorType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
