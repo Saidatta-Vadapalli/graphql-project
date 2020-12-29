@@ -53,7 +53,7 @@ const RootQuery = new GraphQLObjectType({
       // one possible thing the user might request, is to provide find the book details hence defining it in the root resolver
       type: BookType, // setting the type to define a custom graphql datatype
       args: { id: { type: GraphQLID } }, // while sending in the query the book data needed would be identified using the args(which is Id of the book in this case) keyword
-      resolve(parents, args) {
+      resolve(parent, args) {
         // when the query is recieved, the resolve function is fired hence defining the resolved function.
         // the id parameter passed to the graphql api would be accessible with the property as args.id
         // code to get data from the database or other source
@@ -64,7 +64,7 @@ const RootQuery = new GraphQLObjectType({
     author: {
       type: AuthorType,
       args: { id: { type: GraphQLID } },
-      resolve(parents, args) {
+      resolve(parent, args) {
         return _.find(author, { id: args.id });
       },
     },
