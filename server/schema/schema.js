@@ -6,6 +6,7 @@ const {
   GraphQLSchema,
   GraphQLID,
   GraphQLInt,
+  GraphQLList,
 } = graphql;
 
 //dummy data, will be adding the database later on ...
@@ -13,8 +14,11 @@ let books = [
   { name: "Name of the Wind", genre: "Fantasy", id: "1", authorID: "1" },
   { name: "The Final Empire", genre: "Fantasy", id: "2", authorID: "3" },
   { name: "The long Earth", genre: "Sci-Fi", id: "3", authorID: "2" },
+  { name: "The Heros of Ages", genre: "Fantasy", id: "4", authorID: "2" },
+  { name: "The Color of Magic", genre: "Fantasy", id: "5", authorID: "3" },
+  { name: "The Light Fantastic", genre: "Fantasy", id: "6", authorID: "3" },
 ];
-
+// dummy author data to test, database retrival code will be added later on
 let author = [
   { name: "Peter Pan", age: 43, id: "1" },
   { name: "Ron Weasly", age: 24, id: "2" },
@@ -28,6 +32,12 @@ const AuthorType = new GraphQLObjectType({
     name: { type: GraphQLString },
     age: { type: GraphQLInt },
     id: { type: GraphQLID },
+    book: {
+      type: new GraphQLList(BookType), // we're using list type cause There can be multiple books by the same author
+      resolve(parent, args) {
+        return _.filter(books, { authorID: parent.id }); // using the filter function in lodash, we'll be finding all the books whose authorID is equal to the passed parameter ID to author
+      },
+    },
   }),
 });
 
@@ -45,8 +55,8 @@ const BookType = new GraphQLObjectType({
       //not passing any arguments for this  type
       // with this particular type, we're asking for the author details along with the book
       type: AuthorType, //
-      resolve(parent, args) { //resolver function
-        console.log(parent);
+      resolve(parent, args) {
+        //resolver function
         return _.find(author, { id: parent.authorID }); //lodash function responsible for returning the author of the book requested
       },
     },
