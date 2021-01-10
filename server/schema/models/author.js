@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 const authorSchema = new Schema({
   name: String,
-  genre: String,
-
+  age: Number,
   // mongoddb will automatically create an ID for each document
 });
 

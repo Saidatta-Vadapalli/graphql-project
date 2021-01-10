@@ -2,6 +2,18 @@ const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schema/schema");
 const app = express();
+const mongoose = require("mongoose");
+
+require("dotenv").config();
+
+mongoose.connect(
+  `mongodb://saidatta:${process.env.DB_PASSWORD}@gql-cluster.qgtp8.mongodb.net/test`,
+  { useNewUrlParser: true, useUnifiedTopology: true }
+);
+
+mongoose.connection.once("open", () => {
+  console.log("connection to database open");
+});
 
 app.use(
   "/graphql",
